@@ -7,7 +7,7 @@
 # ## 获取数据
 # 我们早已为你提供了数据。你将使用原始数据集的子集，它只包括 Moe 酒馆中的场景。数据中并不包括酒馆的其他版本，比如 “Moe 的山洞”、“燃烧的 Moe 酒馆”、“Moe 叔叔的家庭大餐”等等。
 
-# In[2]:
+# In[1]:
 
 
 """
@@ -24,7 +24,7 @@ text = text[81:]
 # ## 探索数据
 # 使用 `view_sentence_range` 来查看数据的不同部分。
 
-# In[3]:
+# In[2]:
 
 
 view_sentence_range = (0, 10)
@@ -66,7 +66,7 @@ print('\n'.join(text.split('\n')[view_sentence_range[0]:view_sentence_range[1]])
 # 请在下面的元组中返回这些字典
 #  `(vocab_to_int, int_to_vocab)`
 
-# In[4]:
+# In[3]:
 
 
 import numpy as np
@@ -111,7 +111,7 @@ tests.test_create_lookup_tables(create_lookup_tables)
 # 
 # 这个字典将用于标记符号并在其周围添加分隔符（空格）。这能将符号视作单独词汇分割开来，并使神经网络更轻松地预测下一个词汇。请确保你并没有使用容易与词汇混淆的标记。与其使用 “dash” 这样的标记，试试使用“||dash||”。
 
-# In[5]:
+# In[4]:
 
 
 def token_lookup():
@@ -143,7 +143,7 @@ tests.test_tokenize(token_lookup)
 # ## 预处理并保存所有数据
 # 运行以下代码将预处理所有数据，并将它们保存至文件。
 
-# In[6]:
+# In[5]:
 
 
 """
@@ -156,7 +156,7 @@ helper.preprocess_and_save_data(data_dir, token_lookup, create_lookup_tables)
 # # 检查点
 # 这是你遇到的第一个检点。如果你想要回到这个 notebook，或需要重新打开 notebook，你都可以从这里开始。预处理的数据都已经保存完毕。
 
-# In[7]:
+# In[6]:
 
 
 """
@@ -181,7 +181,7 @@ int_text, vocab_to_int, int_to_vocab, token_dict = helper.load_preprocess()
 # 
 # ### 检查 TensorFlow 版本并访问 GPU
 
-# In[1]:
+# In[7]:
 
 
 """
@@ -247,7 +247,9 @@ tests.test_get_inputs(get_inputs)
 # In[9]:
 
 
-def get_init_cell(batch_size, rnn_size):
+# 更新了实现方式，确保每个LSTM单独创建，防止LSTM被TF认为是同一个LSTM单元
+
+def get_init_cell(batch_size, rnn_size, n_layers=3):
     """
     Create an RNN Cell and initialize it.
     :param batch_size: Size of batches
@@ -255,13 +257,19 @@ def get_init_cell(batch_size, rnn_size):
     :return: Tuple (cell, initialize state)
     """
     # TODO: Implement Function
-    lstm = tf.contrib.rnn.BasicLSTMCell(rnn_size)
-    cell = tf.contrib.rnn.MultiRNNCell([lstm] * 2)
 
+    # basic LSTM cell
+    def make_lstm(rnn_size):
+        return tf.contrib.rnn.BasicLSTMCell(rnn_size)
+    
+    # Stack up multiple LSTM layers, for deep learning
+    cell = tf.contrib.rnn.MultiRNNCell([ make_lstm(rnn_size) for _ in range(n_layers)])
+    
+    # Getting an initial state of all zeros
     initial_state = cell.zero_state(batch_size, tf.float32)
-    initial_state = tf.identity(initial_state, "initial_state")
+    initial_state = tf.identity(initial_state, name='initial_state')
+    
     return (cell, initial_state)
-
 
 """
 DON'T MODIFY ANYTHING IN THIS CELL THAT IS BELOW THIS LINE
@@ -373,29 +381,27 @@ tests.test_build_nn(build_nn)
 # 
 # 例如 `get_batches([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 2, 3)` 将返回下面这个 Numpy 数组：
 
+# ```
+# [
+#   # First Batch
+#   [
+#     # Batch of Input
+#     [[ 1  2  3], [ 7  8  9]],
+#     # Batch of targets
+#     [[ 2  3  4], [ 8  9 10]]
+#   ],
+#  
+#   # Second Batch
+#   [
+#     # Batch of Input
+#     [[ 4  5  6], [10 11 12]],
+#     # Batch of targets
+#     [[ 5  6  7], [11 12 13]]
+#   ]
+# ]
+# ```
+
 # In[13]:
-
-
-[
-  # First Batch
-  [
-    # Batch of Input
-    [[ 1  2  3], [ 7  8  9]],
-    # Batch of targets
-    [[ 2  3  4], [ 8  9 10]]
-  ],
- 
-  # Second Batch
-  [
-    # Batch of Input
-    [[ 4  5  6], [10 11 12]],
-    # Batch of targets
-    [[ 5  6  7], [11 12 13]]
-  ]
-]
-
-
-# In[14]:
 
 
 def get_batches(int_text, batch_size, seq_length):
@@ -439,23 +445,27 @@ tests.test_get_batches(get_batches)
 # - 将 `learning_rate` 设置为学习率。
 # - 将 `show_every_n_batches` 设置为神经网络应输出的程序组数量。
 
-# In[21]:
+# In[14]:
 
 
 # Number of Epochs
-num_epochs = 300
+num_epochs = 350
 # Batch Size
-batch_size = 128
+batch_size = 256
 # RNN Size
 rnn_size = 1024
 # Embedding Dimension Size
 embed_dim = 256
+# 增大了seq_length以便学习句子间的关系
 # Sequence Length
-seq_length = 16
+seq_length = 24
 # Learning Rate
-learning_rate = 0.001
+learning_rate = 0.01
+# Learning Rate Decay
+learning_rate_decay = 0.98
+min_learning_rate = 0.001
 # Show stats for every n number of batches
-show_every_n_batches = 10
+show_every_n_batches = 100
 
 """
 DON'T MODIFY ANYTHING IN THIS CELL THAT IS BELOW THIS LINE
@@ -466,7 +476,7 @@ save_dir = './save'
 # ### 创建图表
 # 使用你实现的神经网络创建图表。
 
-# In[22]:
+# In[15]:
 
 
 """
@@ -503,7 +513,7 @@ with train_graph.as_default():
 # ## 训练
 # 在预处理数据中训练神经网络。如果你遇到困难，请查看这个[表格](https://discussions.udacity.com/)，看看是否有人遇到了和你一样的问题。
 
-# In[23]:
+# In[16]:
 
 
 """
@@ -516,6 +526,10 @@ with tf.Session(graph=train_graph) as sess:
 
     for epoch_i in range(num_epochs):
         state = sess.run(initial_state, {input_text: batches[0][0]})
+        
+        learning_rate *= learning_rate_decay
+        if learning_rate < min_learning_rate:
+            learning_rate = min_learning_rate
 
         for batch_i, (x, y) in enumerate(batches):
             feed = {
@@ -542,7 +556,7 @@ with tf.Session(graph=train_graph) as sess:
 # ## 储存参数
 # 储存 `seq_length` 和 `save_dir` 来生成新的电视剧剧本。
 
-# In[24]:
+# In[17]:
 
 
 """
@@ -554,7 +568,7 @@ helper.save_params((seq_length, save_dir))
 
 # # 检查点
 
-# In[25]:
+# In[18]:
 
 
 """
@@ -580,7 +594,7 @@ seq_length, load_dir = helper.load_params()
 # 
 # 返回下列元组中的 tensor `(InputTensor, InitialStateTensor, FinalStateTensor, ProbsTensor)`
 
-# In[26]:
+# In[19]:
 
 
 def get_tensors(loaded_graph):
@@ -606,7 +620,7 @@ tests.test_get_tensors(get_tensors)
 # ### 选择词汇
 # 实现 `pick_word()` 函数来使用 `probabilities` 选择下一个词汇。
 
-# In[27]:
+# In[20]:
 
 
 def pick_word(probabilities, int_to_vocab):
@@ -629,11 +643,13 @@ tests.test_pick_word(pick_word)
 # ## 生成电视剧剧本
 # 这将为你生成一个电视剧剧本。通过设置 `gen_length` 来调整你想生成的剧本长度。
 
-# In[28]:
+# In[21]:
 
 
 gen_length = 300
 # homer_simpson, moe_szyslak, or Barney_Gumble
+
+# prime_word 需要输入剧本中的角色
 prime_word = 'moe_szyslak'
 
 """
@@ -678,7 +694,100 @@ with tf.Session(graph=loaded_graph) as sess:
     print(tv_script)
 
 
-# # 这个电视剧剧本是无意义的
-# 如果这个电视剧剧本毫无意义，那也没有关系。我们的训练文本不到一兆字节。为了获得更好的结果，你需要使用更小的词汇范围或是更多数据。幸运的是，我们的确拥有更多数据！在本项目开始之初我们也曾提过，这是[另一个数据集](https://www.kaggle.com/wcukierski/the-simpsons-by-the-data)的子集。我们并没有让你基于所有数据进行训练，因为这将耗费大量时间。然而，你可以随意使用这些数据训练你的神经网络。当然，是在完成本项目之后。
-# # 提交项目
-# 在提交项目时，请确保你在保存 notebook 前运行了所有的单元格代码。请将 notebook 文件保存为 "dlnd_tv_script_generation.ipynb"，并将它作为 HTML 文件保存在 "File" -> "Download as" 中。请将 "helper.py" 和 "problem_unittests.py" 文件一并提交。
+# In[22]:
+
+
+gen_length = 300
+# homer_simpson, moe_szyslak, or Barney_Gumble
+prime_word = 'homer_simpson'
+
+"""
+DON'T MODIFY ANYTHING IN THIS CELL THAT IS BELOW THIS LINE
+"""
+loaded_graph = tf.Graph()
+with tf.Session(graph=loaded_graph) as sess:
+    # Load saved model
+    loader = tf.train.import_meta_graph(load_dir + '.meta')
+    loader.restore(sess, load_dir)
+
+    # Get Tensors from loaded model
+    input_text, initial_state, final_state, probs = get_tensors(loaded_graph)
+
+    # Sentences generation setup
+    gen_sentences = [prime_word + ':']
+    prev_state = sess.run(initial_state, {input_text: np.array([[1]])})
+
+    # Generate sentences
+    for n in range(gen_length):
+        # Dynamic Input
+        dyn_input = [[vocab_to_int[word] for word in gen_sentences[-seq_length:]]]
+        dyn_seq_length = len(dyn_input[0])
+
+        # Get Prediction
+        probabilities, prev_state = sess.run(
+            [probs, final_state],
+            {input_text: dyn_input, initial_state: prev_state})
+        
+        pred_word = pick_word(probabilities[dyn_seq_length-1], int_to_vocab)
+
+        gen_sentences.append(pred_word)
+    
+    # Remove tokens
+    tv_script = ' '.join(gen_sentences)
+    for key, token in token_dict.items():
+        ending = ' ' if key in ['\n', '(', '"'] else ''
+        tv_script = tv_script.replace(' ' + token.lower(), key)
+    tv_script = tv_script.replace('\n ', '\n')
+    tv_script = tv_script.replace('( ', '(')
+        
+    print(tv_script)
+
+
+# In[28]:
+
+
+gen_length = 300
+# homer_simpson, moe_szyslak, or Barney_Gumble
+prime_word = 'all'
+
+"""
+DON'T MODIFY ANYTHING IN THIS CELL THAT IS BELOW THIS LINE
+"""
+loaded_graph = tf.Graph()
+with tf.Session(graph=loaded_graph) as sess:
+    # Load saved model
+    loader = tf.train.import_meta_graph(load_dir + '.meta')
+    loader.restore(sess, load_dir)
+
+    # Get Tensors from loaded model
+    input_text, initial_state, final_state, probs = get_tensors(loaded_graph)
+
+    # Sentences generation setup
+    gen_sentences = [prime_word + ':']
+    prev_state = sess.run(initial_state, {input_text: np.array([[1]])})
+
+    # Generate sentences
+    for n in range(gen_length):
+        # Dynamic Input
+        dyn_input = [[vocab_to_int[word] for word in gen_sentences[-seq_length:]]]
+        dyn_seq_length = len(dyn_input[0])
+
+        # Get Prediction
+        probabilities, prev_state = sess.run(
+            [probs, final_state],
+            {input_text: dyn_input, initial_state: prev_state})
+        
+        pred_word = pick_word(probabilities[dyn_seq_length-1], int_to_vocab)
+
+        gen_sentences.append(pred_word)
+    
+    # Remove tokens
+    tv_script = ' '.join(gen_sentences)
+    for key, token in token_dict.items():
+        ending = ' ' if key in ['\n', '(', '"'] else ''
+        tv_script = tv_script.replace(' ' + token.lower(), key)
+    tv_script = tv_script.replace('\n ', '\n')
+    tv_script = tv_script.replace('( ', '(')
+        
+    print(tv_script)
+

@@ -1,0 +1,151 @@
+******************************************
+************ 初代 RNN 生成的剧本 ***********
+******************************************
+
+# prime_word 必须是剧本中的角色
+prime_word = 'moe_szyslak'
+
+
+moe_szyslak: tax hike?! hold the phone, mabel!
+carl_carlson: you know, i used to hate away yourself?
+homer_simpson:(beat) my first credit card!(very loud)
+homer_simpson:(pats nervous) voice.
+homer_simpson: moe, i do!
+homer_simpson: you'll do is that voice in our heads telling us.
+artie_ziff:(worried) so great? what do not, isn't about you... ah, the" burn" tv!"(beat) hello...
+homer_simpson: wow!
+lenny_leonard:(friendly) i mean, moe?
+moe_szyslak: hey, i don't know.
+
+moe_szyslak: an unforgettable weekend at club moe.
+moe_szyslak:" dear homer, i let me in the life. let's get pretty face, and the almond ones.
+moe_szyslak: so, uh, the had none of this town enforced to the letter, he ruined there.
+homer_simpson: barney we are," kid sucked they enveloped him!
+homer_simpson: i gotta know that to dinner for a cuckold's horns, and is a man taking thomas edison. and he invented the day. like me just make it like you in nigeria.
+grampa_simpson: that's the beauty part.(warmly) carl, i think i'll give one-- what the one thing who won't have.
+young_homer: look at you, mom can this. a night in his tab...
+lenny_leonard: are you have to go to that.
+homer_simpson: oh, right. there's lots out of the way.
+homer_simpson: america a classy. i really
+
+
+******************************************
+************ 2代 RNN 生成的剧本 ************
+******************************************
+
+# prime_word 必须是剧本中的角色
+prime_word = 'moe_szyslak'
+
+
+moe_szyslak: sorry, homer.
+homer_simpson: you know, if you tip the glass, there won't be so much foam on top.
+kemi: no what i drink, or we could have a feeling is us if i'm one surprised was.
+artie_ziff: i'm point of was times, no off the time.
+announcer:(nods) no, he's your other one man to try to moron with a shot urinal. and--
+marge_simpson: marge, the japanese more of front. oh, we've going? some guys. we might never been into you better right and take their job?
+barney_gumble: we'll thinks you? we're what work at a house. now for no matter. i said you later?
+nigel_bakerbutcher: you're me, if i got a modest turning thing: fast, like a chance.
+moe_szyslak: maybe the selling out?
+barney_gumble: i sure that everything you was, stop... we're, i'm not a house for sure for her, look, i am i want to survive a song.
+carl_carlson: thanks! oh, homer, that's here, because! we. but had it was in about night. all like my little phone. uh, and it right. i could do it's in.
+
+barney_gumble: where he like it.
+larry: to... and i mean you like three of our samples as a rough are who less your money, you're...(looks off) no, yeah, this it in to lead you?
+jasper_beardly:(respect) ya, an glasses of a man.
+
+——————————————————————————————————————————
+
+# prime_word 必须是剧本中的角色
+prime_word = 'homer_simpson'
+
+
+homer_simpson: hmmmm.
+barflies: burn! burn! burn!
+homer_simpson: effigy, eh? yeah, nothing burns like an effigy.
+homer_simpson: eh, that at my beer?
+moe_szyslak: hey! to this here. they don't not see a new man and make your blaze, she look dollar was kid, kid--" at we," and that platinum.
+lenny_leonard: oh, you're better about your way.
+barney_gumble: ooh.(he beer) no, okay, where all you naturally its being a air 'em in your smurfs.!
+homer_simpson: well, homer. i'm just play, a first bit from a car?
+grampa_simpson: moe, you thought you need me till it since uh, you gotta gotta check.
+carl_carlson: i mean what you gotta kinda stupid one.
+ned_flanders: the public him, here i are, i got it. thinkin' p.
+c. carl_carlson: i can know,...
+
+moe_szyslak: hey, we ain't looking at job, moe?(sighs) he can't pay today?
+lenny_leonard: and see was a watch double for an wife to these a ladies' down.
+homer_simpson: i got a day for which.
+moe_szyslak:(offended) hey, it it for you. i'm a little man. we need reached the dank?
+lisa_simpson: no, i see how on so around, stick on an thing that with me.
+lenny_leonard: no there! an to work and a butt(to what holds up forty arm alone...
+homer_simpson:(annoyed) these embarrassing
+
+——————————————————————————————————————————
+
+# prime_word 必须是剧本中的角色
+prime_word = 'all'
+
+
+all:. damn! that's course. i don't know.
+moe_szyslak: homer, sounds 'em for your man!
+
+homer_simpson:(surprised sound gasp) i'm come time.
+hugh: wow.(stagy) hi, marge what?
+lisa_simpson:(surprised to baby) on homer for on.
+barney_gumble: burn?
+moe_szyslak: we've dunno on this more. you always have barney in that in here.
+moe_szyslak: so,", he so supervising me a beer, homer?
+barney_gumble: we're a good idea? do. and he rather ever worst are is to calf's straight to the night old home too dollars.
+moe_szyslak: what about you, love is. you got a new safe turned to your navy and like?
+moe_szyslak: moe, moe. we're too tomorrow, we think...(sly chuckle)
+krusty_the_clown: no, sorry, let me fine. he's need up at the money, right. i like an delicately, you'll get out of my friend?
+lenny_leonard: guys. i'll guys turning a be book tonight, and that's your guy.
+lenny_leonard: so i used going as a rebuttal!
+moe_szyslak:(a little thing of tv) and here's so wino's all your strong.
+moe_szyslak:(to thing in shotgun) give me i done this my break way--
+carl_carlson: i do were is the loser.
+carl_carlson: sure?(laughs)" god, i made your family and neck. times!
+moe_szyslak:(drunk) ah, having--(to homer) say... screw? my
+
+
+******************************************
+***** 2代 RNN 生成的剧本（全部数据集训练）*****
+******************************************
+
+# prime_word 必须是剧本中的角色
+prime_word = 'father'
+
+
+father:. it's today!
+kirk van houten: let's do he'll be not close with the jacques: cooks cup is okay!
+" edna krabappel-flanders: yeah if the dessert i have me from another grand vampires.(surprised) edna.(mystical tips) well... fertilization strokes you."
+" homer simpson: now, i'm what you, ba as really earring?"
+" lenny leonard: homer, i can get your old stamp to no tanager.(chant voice, to himself) i went out my... i'm... i even just should be fine."
+bart simpson: i'll get down, but i are a drive, but i'll do it!(irish) mrs. drop me it are worked for underground money on the frustrations."
+bart simpson: buckle how are i wasn't, searing nelson: from bart.(latt茅, holds up 8-ball) there's the park tape open."
+grampa simpson:(to clipboard) where'd you patrols a man from my business buchanan!
+" dr. krusty!"" mm in the sleepover. maybe you're running if you leave me it!
+" milhouse van houten: if!"""
+" todd szyslak: c'mon hmm, neither might make it! statements."
+" sideshow mel: today, no simpson!(upbeat) come through to next realizes. you're a hell, and i want to be a hippies, are it, all time?"
+homer simpson: you've wound!
+" c. montgomery burns: hmmm, i contend where my bone topics--
+
+——————————————————————————————————————————
+
+# prime_word 必须是剧本中的角色
+prime_word = 'all'
+
+all: i'm doing on a pink.
+marge simpson: he a little bay!!
+" homer simpson:(suddenly then? mother one. none thought and she mind out. or stupid, giving my life."
+judge guide: what. they used to teach! i'm sick time... nobody back the when you'll sign(horrified) : the hazard parade if you shock it. here and cry.
+" bart simpson:(high-pitched noises van brunt: big lobster) thank me, what do the space seed!..."
+milhouse van houten:(sighs) you're putting we in help. any too from cockroaches.
+frank jewish man(to very to booze) cake!
+bart simpson: what was the house. i'll be making her for duff and hydraulic human errors do me on your garden?. can sir i will we bring me. hey, okay-- i have been low again. but it have put three million reason, i'm to be made to sailin' sculpture"".""..."""
+" interviewer: little father just think do it. i are, if it's some buns tuned? marge. walla renee?... with school!"
+liz: hi troy sure do you say clancy.
+" 2nd york woman: what wants one is going turned a truck""."
+" homer simpson: krav harm: big me! i'll try speak to take him to borrow me at it!"
+lenny leonard: come is your fingers, would not to go, so i thought you
